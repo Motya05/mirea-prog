@@ -1,0 +1,24 @@
+Base.oneunit(::Type{Matrix{T}}) where T = [oneunit(T) zero(T) ; zero(T) oneunit(T)]
+
+#1. Написать обобщенную функцию, реализующую алгоритм быстрого возведения в степень
+function FastPower(number::T,degree::Integer)::T where T
+	power = oneunit(T)
+
+	# инвариант: number ^ degree * power == number ^ degree
+
+	while degree > 0
+		# инвариант: number ^ degree * power == number ^ degree
+
+		if degree % 2 == 0
+			degree = degree / 2
+			number = number * number
+		else
+			degree = degree - 1
+			power = power * number
+		end
+	end
+
+	# утверждение: degree == 0 и number ^ degree * power == number ^ degree
+	
+	return power
+end
