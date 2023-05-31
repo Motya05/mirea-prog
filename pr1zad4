@@ -1,0 +1,10 @@
+С использованием функции gcdx_ реализовать функцию diaphant_solve(a::T,b::T,c::T) where T, которая бы возвращала решение дафаетового уравнения ax+by=c, если уравнение разрешимо, и значение nothing - в противном случае
+   
+(если d=ua+vb, и если получилость, что d=1, u, v - есть решение уравнения, в противном случае уранение не разрешимо)
+=#
+
+function diaphant_solve(a::T,b::T,c::T)#=::Tuple{T,T}=# where T <: Number
+	info = gcdx(a,b)
+
+	return info[1] > 1 ? nothing : ( info[2] * c , info[3] * c )
+end
