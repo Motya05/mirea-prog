@@ -1,0 +1,39 @@
+Base.oneunit(::Type{Matrix{T}}) where T = [oneunit(T) zero(T) ; zero(T) oneunit(T)]
+
+#3. Написать функцию, вычисляющую с заданной точностью log_a(x)
+# (при произвольном aa, не обязательно, что a > 1), методом рассмотренном на лекции
+# (описание этого метода можно найти также в книке Борисенко "Основы программирования" - она выложена в нашей группе в телеграм).
+
+function ApproximateLogarithm(number::Real,base::Real,epsilon::Real)::Real
+	@assert base > 1
+	@assert number > 0
+	@assert epsilon > 0
+
+	result = zero(Real)
+	temp = oneunit(Real)
+
+	# утверждение: base ^ result * number ^ temp == number
+
+	while abs(temp) >= epsilon || number <= (1.0 / base) || number >= base
+
+		# инвариант: base ^ result * number ^ temp == number
+
+		if number >= base
+			number = number / base
+			result = result + temp
+		elseif number <= (1.0 / base)
+			number = number * base
+			result = result - temp
+		else
+			number = number * number
+			temp = temp / 2.0
+		end
+	end
+
+	# утверждение: |temp| < epsilon и
+	#	number > 1.0 / base и number < base
+	#	и
+	#	base ^ result * number ^ temp == number
+		
+	return result
+end
