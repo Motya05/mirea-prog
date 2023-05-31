@@ -1,0 +1,32 @@
+#3. Разложение числа на простые множители и их степени
+function factor(n::Integer)::Tuple{Array{Integer},Array{Integer}}
+	primes = Vector{Integer}(undef,0)
+	degrees = Vector{Integer}(undef,0)
+
+	m = 2
+
+	while m * m <= n
+		degree = 0
+
+		while n % m == 0
+			n /= m
+			degree += 1
+		end
+
+		if degree > 0
+			push!(primes,m)
+			push!(degrees,degree)
+		end
+		
+		m += 1
+	end
+
+	if n > 1
+		push!(primes,n)
+		push!(degrees,1)
+	end
+
+	return primes, degrees
+end
+
+println(factor( 2^5 * 3^2 * 131 ))
