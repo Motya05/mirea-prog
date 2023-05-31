@@ -1,0 +1,56 @@
+include("residue.jl")
+ 
+#=
+
+Реализовать тип Plolynom{T} (T- тип коэффициентов многочлена)
+
+=#
+
+struct Polynom{T <: Number}
+    Coefficient::Array{T}
+	Power::Integer
+
+	Polynom{T}(power::Integer) where T = new(Vector{T}(undef,power + 1),power)
+
+	Polynom{T}(coef::Array) where T = new(convert(Array{T},coef),length(coef) - 1)
+end
+
+# единица
+Base.oneunit(::Type{Polynom{T}}) where T = Polynom([oneunit(T)])
+
+# ноль
+Base.zero(::Type{Polynom{T}}) where T = Polynom([zero(T)])
+
+function get_power(poly::Polynom{T}) where T 
+	for i in poly.Power:-1:0
+		if get_coefficient(poly,i) != Base.zero(T)
+			return i
+		end
+	end
+
+	return 0
+end
+
+get_coefficient(poly::Polynom{T},n::Integer) where T = poly.Coefficient[n + 1]
+
+set_coefficient(poly::Polynom{T},n::Integer,coef::T) where T = ( poly.Coefficient[n + 1] = coef )
+
+function Base.display(poly::Polynom{T}) where T
+	for i in poly.Power:-1:0
+		if get_coefficient(poly,i) == Base.zero(T)
+			continue
+		end
+
+		print( get_coefficient(poly,i) )
+
+		if i > 1
+			print(" * t^",i," + ")
+		elseif i > 0
+			print( " * t + ")
+		end
+	end
+
+	println("")
+
+	return nothing
+end
