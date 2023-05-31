@@ -1,0 +1,9 @@
+Base.oneunit(::Type{Matrix{T}}) where T = [oneunit(T) zero(T) ; zero(T) oneunit(T)]
+
+#2. На база этой функции написать другую функцию, возвращающую n-ый член последовательности Фибоначчи (сложность - O(log n))
+
+function GetFibonachi(n::Integer)::Real
+	return FastPower([1 1 ; 1 0],n)[1,1]
+end
+
+println("5 член фиббоначи: ",GetFibonachi(5))
