@@ -1,0 +1,9 @@
+1. Написать функцию, вычисляющую НОД двух чисел (или многочленов)
+
+function gcd_(a::T,b::T)::T where T
+    while b > 0
+        a,b = b,mod(a,b)
+    end
+
+    return a
+end
