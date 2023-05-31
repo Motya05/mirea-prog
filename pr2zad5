@@ -1,0 +1,8 @@
+Base.oneunit(::Type{Matrix{T}}) where T = [oneunit(T) zero(T) ; zero(T) oneunit(T)]
+
+#5. Найти приближенное решение уравнения cos(x) = x методом деления отрезка пополам.
+println("===\nДеление отрезка пополам:\ncos(x) = x\nx ~= ",
+	SolveBisection(0.0,pi / 2.0,0.01) do x::Real
+		return cos(x) - x
+	end
+)
