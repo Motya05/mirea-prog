@@ -1,4 +1,7 @@
+#=
 Написать функцию, вычисляющую НОД двух чисел (или многочленов)
+=#
+include("residue.jl")
 
 function gcd_(a::T,b::T)::T where T
     while b > 0
