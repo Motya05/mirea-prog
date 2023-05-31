@@ -1,0 +1,17 @@
+#1. Проверка на простоту числа за O( sqrt(n) )
+function isprime_(x::Integer)::Bool
+	if x < 2
+		return false
+	end
+
+	for n in 2:sqrt(x)
+		if x % n == 0
+			return false
+		end
+	end
+
+	return true
+end
+
+println(isprime_(11))
+
