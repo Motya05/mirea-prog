@@ -1,0 +1,20 @@
+#2. Написать функцию, вычиляющую значение exp(x) с машинной точностью (с
+# максимально возможной в арифметике с плавающей точкой).
+function exp_machine(x::T)::T where T
+    value = oneunit(T)
+	fact = oneunit(T)
+    
+	while abs(x/fact) > eps(T)
+		value += x / fact
+		x *= x
+		fact *= fact + oneunit(T)
+	end
+
+	return value
+end
+
+function exp_ideal(x::T)::T where T
+	return FastPower(Float64(ℯ),Int(trunc(x))) * exp_machine(x - trunc(x))
+end
+
+println("exp(1) = ",exp_ideal(1.0))
