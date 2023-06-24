@@ -1,0 +1,19 @@
+#3. Реализовать алгоритм сортировки Шелла, который базируется на сортировке вставками.
+# Исследовать эффективность этого алгоритма в равнении с сортировкой вставками (на больших массивах делать времннные замеры).
+
+# Сортировка Шелла O( n^2 )
+function shell_sort!(array::AbstractVector{T})::AbstractVector{T} where T <: Number
+    n = length(array)
+
+	# Здесь последовательность шагов прореживания массива определяется генератором
+    step_series = (n÷2^i for i in 1:Int(floor(log2(n)))) 
+
+    for step in step_series
+        for i in firstindex(array):step-1
+            insert_sort!(@view array[i:step:end]) # - сортировка вставками выделенного (прореженного) подмассива
+        end
+    end
+    return array
+end
+
+shell_sort(array::AbstractVector)::AbstractVector = shell_sort!(copy(array))
