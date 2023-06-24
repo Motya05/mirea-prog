@@ -1,0 +1,20 @@
+#2. Реализовать алгоритм сортировки "расчесыванием", который базируется на сортировке "пузырьком". Исследовать эффективность этого алгоритма в равнении с пузырьковой сортировкой (на больших массивах делать времннные замеры).
+
+# Сортировка расчёской O( n^2 )
+function comb_sort!(array::AbstractVector{T}, factor::Real=1.2473309) where T <: Number 
+    step = length(array)
+
+    while step >= 1
+        for i in 1:length(array)-step
+            if array[i] > array[i+step]
+                array[i], array[i+step] = array[i+step], array[i]
+            end
+        end
+        step = Int(floor(step/factor))
+    end
+
+    # Теперь массив почти упорядочен, осталось сделать всего несколько итераций внешнего цикла в bubble_sort!(array)
+    bubble_sort!(array)
+end
+
+comb_sort(array::AbstractVector, factor::Real=1.2473309)::AbstractVector = comb_sort!(copy(array),factor)
