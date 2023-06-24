@@ -1,0 +1,17 @@
+# 5. Написать функцию, проверяющую лежит ли заданная точка внутри заданного многоугольника.
+function isinside(point::Vector2D{T},polygon::AbstractArray{Vector2D{T}})::Bool where T
+	@assert length(polygon) > 2
+
+	sum = zero(Float64)
+
+	# Вычислить алгебраическую (т.е. с учетом знака) сумму углов, между направлениями из заданной точки на каждые две сосоедние вершины многоугольника.
+	# Далее воспользоваться тем, что, если полученная сумма окажется равнной нулю, то точка лежит вне многоугольника, а если она окажется равной 360 градусам, то - внутри.
+	for i in firstindex(polygon):lastindex(polygon)
+		sum += angle( polygon[i] - point , polygon[i % lastindex(polygon) + 1] - point )
+	end
+	
+	return abs(sum) > π
+end
+
+println("Внутри: ",isinside( (x=0,y=0),[(x=0,y=1),(x=1,y=-1),(x=-1,y=-1)] ))
+println("Внутри: ",isinside( (x=5,y=0),[(x=0,y=1),(x=1,y=-1),(x=-1,y=-1)] ))
