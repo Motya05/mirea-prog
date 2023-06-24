@@ -1,0 +1,11 @@
+#4. Реализовать алгорим, реализующий обратный ход алгоритма Жордана-Гаусса
+function ReverseGauss_first!(matrix::AbstractMatrix{T}, b::AbstractVector{T})::AbstractVector{T} where T
+	x = similar(b)
+	N = size(matrix, 1)
+
+	for k in 0:N-1
+		x[N-k] = (b[N-k] - sum(matrix[N-k,N-k+1:end] .* x[N-k+1:end])) / matrix[N-k,N-k]
+	end
+
+	return x
+end
